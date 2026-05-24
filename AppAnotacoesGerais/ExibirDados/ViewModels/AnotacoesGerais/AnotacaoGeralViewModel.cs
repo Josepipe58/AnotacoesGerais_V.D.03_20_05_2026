@@ -1,0 +1,254 @@
+﻿using AppAnotacoesGerais.AcessarDados.Entidades;
+using AppAnotacoesGerais.ExibirDados.Comandos;
+using AppAnotacoesGerais.ExibirDados.Models;
+using AppAnotacoesGerais.GerenciarDados;
+using AppAnotacoesGerais.GerenciarDados.Repositorios;
+using System.Collections.ObjectModel;
+using System.Windows;
+
+namespace AppAnotacoesGerais.ExibirDados.ViewModels.AnotacoesGerais;
+
+// Campos, Propriedades e Métodos relacionados à funcionalidade de Anotações Gerais.
+public partial class AnotacaoGeralViewModel : ViewModelBase
+{
+    public CategoriaRepositorio _categoriaRepositorio = new();
+    public SubcategoriaRepositorio _subcategoriaRepositorio = new();
+    public NomeDescricaoRepositorio _nomeDescricaoRepositorio = new();
+    public AnotacaoGeralRepositorio _anotacaoGeralRepositorio = new();
+
+    public AnotacaoGeralModel AnotacaoGeralModel { get; set; } = new();
+    public CategoriaModel CategoriaModel { get; set; } = new();
+    public SubcategoriaModel SubcategoriaModel { get; set; } = new();
+    public NomeDescricaoModel NomeDescricaoModel { get; set; } = new();
+
+    private readonly ObservableCollection<AnotacaoGeral> _listaDeAnotacoesGerais = [];
+    public ReadOnlyObservableCollection<AnotacaoGeral> ListaDeAnotacoesGerais { get; }  
+
+    //Propriedade do evento: "SelectionChanged" entre o ComboBox de Categorias e o ComboBox de Subcategorias.
+    private Categoria _categoriaSelecionada;
+    public Categoria CategoriaSelecionada
+    {
+        get => _categoriaSelecionada;
+        set
+        {
+            if (_categoriaSelecionada != value)
+            {
+                _categoriaSelecionada = value;
+                OnPropertyChanged(nameof(CategoriaSelecionada));
+
+                //Aguarde o binding ser atualizado antes de chamar os métodos.
+                Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    AtualizarListaDeSubcategorias(CategoriaSelecionada, true);
+                });
+            }
+        }
+    }
+
+    //Propriedade do evento: "SelectionChanged" entre o ComboBox de Categorias e o ComboBox de Subcategorias.
+    private Subcategoria _subcategoriaSelecionada = new();
+    public Subcategoria SubcategoriaSelecionada
+    {
+        get => _subcategoriaSelecionada;
+        set
+        {
+            if (_subcategoriaSelecionada != value)
+            {
+                _subcategoriaSelecionada = value;
+                OnPropertyChanged(nameof(SubcategoriaSelecionada));
+
+                //Aguarde o binding ser atualizado antes de chamar os métodos.
+                Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    AtualizarListaDeNomeDescricao(SubcategoriaSelecionada, true);
+                });
+
+            }
+        }
+    }
+
+    //Propriedade do evento: "SelectionChanged" entre o ComboBox de Subcategorias e o ComboBox de NomeDescricao.
+    private NomeDescricao _nomeDescricaoSelecionada = new();
+    public NomeDescricao NomeDescricaoSelecionada
+    {
+        get => _nomeDescricaoSelecionada;
+        set
+        {
+            if (_nomeDescricaoSelecionada != value)
+            {
+                _nomeDescricaoSelecionada = value;
+                OnPropertyChanged(nameof(NomeDescricaoSelecionada));
+
+                //Aguarde o binding ser atualizado antes de chamar os métodos.
+                Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    ConsultasDeAnotacoesGerais();
+                });
+            }
+        }
+    }
+
+    //Propriedade do evento: "SelectionChanged" entre o ComboBox de Categorias e o ComboBox de Subcategorias.
+    private Categoria _categoriaSelecionadaEditar;
+    public Categoria CategoriaSelecionadaEditar
+    {
+        get => _categoriaSelecionadaEditar;
+        set
+        {
+            if (_categoriaSelecionadaEditar != value)
+            {
+                _categoriaSelecionadaEditar = value;
+                OnPropertyChanged(nameof(CategoriaSelecionadaEditar));
+                AtualizarListaDeSubcategorias(CategoriaSelecionadaEditar, false);
+            }
+        }
+    }
+
+    //Propriedade do evento: "SelectionChanged" entre o ComboBox de Categorias e o ComboBox de Subcategorias.
+    private Subcategoria _subcategoriaSelecionadaEditar = new();
+    public Subcategoria SubcategoriaSelecionadaEditar
+    {
+        get => _subcategoriaSelecionadaEditar;
+        set
+        {
+            if (_subcategoriaSelecionadaEditar != value)
+            {
+                _subcategoriaSelecionadaEditar = value;
+                OnPropertyChanged(nameof(SubcategoriaSelecionadaEditar));
+
+                AtualizarListaDeNomeDescricao(SubcategoriaSelecionadaEditar, false);
+            }
+        }
+    }
+
+    public AnotacaoGeralViewModel()
+    {
+        //Carregar ComboBox de Categorias de Despesa.
+        CategoriaModel.ListaDeCategorias = [.. _categoriaRepositorio.ObterListaDeTodos() ?? []];
+        ConsultasDeAnotacoesGerais();
+        ContadorDeRegistros();
+
+        //Carregar DataGrid de Anotações Gerais.
+        //Usando encapsulamento para obter a lista de Anotações Gerais do repositório e armazená-la em uma coleção observável.
+        ListaDeAnotacoesGerais = new ReadOnlyObservableCollection<AnotacaoGeral>(_listaDeAnotacoesGerais);
+    }
+
+    // Método interno comum para atualizar a lista de Subcategorias.
+    // chamarConsultas = true -> também chama ConsultasDeAnotacoesGerais() (usado no fluxo não editar)
+    private void AtualizarListaDeSubcategorias(Categoria categoria, bool chamarConsultas)
+    {
+        if (categoria != null)
+        {
+            SubcategoriaModel.ListaDeSubcategorias = [.. SubcategoriaRepositorio.ObterSubcategoriasPorId(categoria.Id) ?? []];
+            SubcategoriaModel.IndiceSelecionadoSubcategoria = -1;
+
+            if (chamarConsultas)
+                ConsultasDeAnotacoesGerais();
+        }
+        else
+        {
+            SubcategoriaModel.ListaDeSubcategorias = [];
+        }
+    }
+
+    // Método interno comum para atualizar a lista de NomeDescricao.
+    // chamarConsultas = true -> também chama ConsultasDeAnotacoesGerais() (usado no fluxo não editar)
+    private void AtualizarListaDeNomeDescricao(Subcategoria subcategoria, bool chamarConsultas)
+    {
+        if (subcategoria != null)
+        {
+            NomeDescricaoModel.ListaDoNomeDescricao = [.. NomeDescricaoRepositorio.ObterNomeDescricaoPorId(subcategoria.Id) ?? []];
+
+            if (chamarConsultas)
+                ConsultasDeAnotacoesGerais();
+        }
+        else
+        {
+            NomeDescricaoModel.ListaDoNomeDescricao = [];
+        }
+    }
+
+    public void ConsultasDeAnotacoesGerais()
+    {
+        try
+        {
+            var listaDeAnotacoesGerais = new ObservableCollection<AnotacaoGeral>();
+            if (string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeCategoria) && string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeSubcategoria)
+                && string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeDaDescricao))
+            {
+                listaDeAnotacoesGerais = [.. AnotacaoGeralRepositorio.ObterAnotacoesGerais() ?? []];
+
+                _listaDeAnotacoesGerais.Clear();
+                foreach (var item in listaDeAnotacoesGerais)
+                    _listaDeAnotacoesGerais.Add(item);
+            }
+            else if (!string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeCategoria) && string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeSubcategoria)
+                && string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeDaDescricao))
+            {
+                listaDeAnotacoesGerais = [.. AnotacaoGeralRepositorio.ObterAnotacoesGerais().Where(x => x.NomeCategoria == AnotacaoGeralModel.NomeCategoria)
+                   ?? new ObservableCollection<AnotacaoGeral>()];
+
+                _listaDeAnotacoesGerais.Clear();
+                foreach (var item in listaDeAnotacoesGerais)
+                    _listaDeAnotacoesGerais.Add(item);
+            }
+            else if (!string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeCategoria) && !string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeSubcategoria)
+                && string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeDaDescricao))
+            {
+                listaDeAnotacoesGerais = [.. AnotacaoGeralRepositorio.ObterAnotacoesGerais().Where(dp => dp.NomeCategoria == AnotacaoGeralModel.NomeCategoria
+                && dp.NomeSubcategoria == AnotacaoGeralModel.NomeSubcategoria)];
+
+                _listaDeAnotacoesGerais.Clear();
+                foreach (var item in listaDeAnotacoesGerais)
+                    _listaDeAnotacoesGerais.Add(item);
+            }
+            else if (!string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeCategoria) && !string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeSubcategoria)
+                && !string.IsNullOrWhiteSpace(AnotacaoGeralModel.NomeDaDescricao))
+            {
+                listaDeAnotacoesGerais = [.. AnotacaoGeralRepositorio.ObterAnotacoesGerais().Where(dp => dp.NomeCategoria == AnotacaoGeralModel.NomeCategoria
+                && dp.NomeSubcategoria == AnotacaoGeralModel.NomeSubcategoria && dp.NomeDaDescricao == AnotacaoGeralModel.NomeDaDescricao)];
+
+                _listaDeAnotacoesGerais.Clear();
+                foreach (var item in listaDeAnotacoesGerais)
+                    _listaDeAnotacoesGerais.Add(item);
+            }
+            else
+            {
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            Mensagens.NomeDoMetodo = "ConsultasDeAnotacoesGerais";
+            Mensagens.ErroDeExcecaoENomeDoMetodo(ex, Mensagens.NomeDoMetodo);
+            return;
+        }
+    }
+
+    public void ContadorDeRegistros()
+    {
+        int contador = _anotacaoGeralRepositorio.ContadorRegistros();
+        if (contador <= 0)
+        {
+            MessageBox.Show($"Atenção! Não existe nenhum registro no Banco de Dados.",
+                        "Aviso!", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        AnotacaoGeralModel.ContadorRegistros = contador;
+    }
+
+    public void AtualizarAnotacaoGeral()
+    {
+        AnotacaoGeralModel.Id = 0;
+        AnotacaoGeralModel.NomeCategoria = null;
+        AnotacaoGeralModel.NomeSubcategoria = null;
+        AnotacaoGeralModel.NomeDaDescricao = null;
+        ConsultasDeAnotacoesGerais();
+    }
+
+    public void LimparAdicionarEditar()
+    {
+        AnotacaoGeralModel.Id = 0;
+        AnotacaoGeralModel.Descricao = null;
+        AnotacaoGeralModel.Data = DateTime.Now;
+    }
+}

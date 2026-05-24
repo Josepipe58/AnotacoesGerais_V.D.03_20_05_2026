@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp">
+
+    <!--| Cores do Painel |-->
+    <SolidColorBrush x:Key="CorFundoMenu" Color="#FF021507"/>
+    <SolidColorBrush x:Key="CorMouseOverMenu" Color="#FF0B8C70"/>
+    <SolidColorBrush x:Key="CorMenuAtivo" Color="#FF07420B"/>
+
+    <!--| Cores dos Ícones do Menu |-->
+    <SolidColorBrush x:Key="Cor01" Color="#FF13E820"/>
+    <SolidColorBrush x:Key="Cor02" Color="#4ADAEC"/>
+    <SolidColorBrush x:Key="Cor03" Color="White"/>
+    <SolidColorBrush x:Key="Cor04" Color="#FFC50FEF"/>
+    <SolidColorBrush x:Key="Cor05" Color="#FFE81515"/>
+    <SolidColorBrush x:Key="Cor06" Color="#FFC047"/>
+    <SolidColorBrush x:Key="Cor07" Color="#FFE2DD6E"/>
+    <SolidColorBrush x:Key="Cor08" Color="#FBA1AA"/>
+    <SolidColorBrush x:Key="Cor09" Color="#07F3C0"/>
+    
+    <!--| Cor da Fonte |-->
+    <SolidColorBrush x:Key="CorDaFonte_01" Color="White"/>
+    <SolidColorBrush x:Key="CorDaFonte_02" Color="Black"/>
+    <SolidColorBrush x:Key="CorDaFonte_03" Color="#FF0A5A1D"/>
+
+    <!--| Ponto de Inserção de Texto(CaretBrush) |-->
+    <SolidColorBrush x:Key="PontoDeInsercao_01" Color="White"/>
+    <SolidColorBrush x:Key="PontoDeInsercao_02" Color="#FF091F0B"/>
+
+    <!--| Cores de Fundo |-->
+    <SolidColorBrush x:Key="CorDeFundo_01" Color="White"/>
+    <SolidColorBrush x:Key="CorDeFundo_02" Color="#FF086B18"/>
+    <SolidColorBrush x:Key="CorDeFundo_03" Color="#FF091F0B"/>
+    <SolidColorBrush x:Key="CorDeFundo_04" Color="Transparent"/>
+    <SolidColorBrush x:Key="CorDeFundo_05" Color="#FF021507"/>
+
+    <!--| Cor da Borda(BorderBrush) |-->
+    <SolidColorBrush x:Key="CorDaBorda_01" Color="White"/>
+    <SolidColorBrush x:Key="CorDaBorda_02" Color="#FF086B18"/>
+    <SolidColorBrush x:Key="CorDaBorda_03" Color="Transparent"/>
+    <SolidColorBrush x:Key="CorDaBorda_04" Color="#FF44E24D"/>
+
+    <!--| Cor do Mouse Over do Botão |-->
+    <SolidColorBrush x:Key="CorMouseOverBotao" Color="#FF2AB732"/>
+
+    <!--| Cor do Botão Ativo |-->
+    <SolidColorBrush x:Key="CorBotaoAtivo" Color="#FF0B8C70"/>
+
+    <!--| Diversas Cores |-->
+    <SolidColorBrush x:Key="CorTransparente" Color="Transparent"/>
+    <SolidColorBrush x:Key="CorBranca" Color="White"/>
+</ResourceDictionary>

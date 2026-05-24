@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="AppAnotacoesGerais.ExibirDados.Views.NomeDescricaoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppAnotacoesGerais.ExibirDados.ViewModels.NomeDescricaoVM"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" xml:lang="pt-BR" d:DesignHeight="950" d:DesignWidth="1400">
+
+    <UserControl.DataContext>
+        <local:NomeDescricaoViewModel/>
+    </UserControl.DataContext>
+
+    <Border CornerRadius="10" Background="#FF052503">
+            <!--| Grid Principal |-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="255"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--| Grid Superior |-->
+                <Grid>
+
+                    <!--| Rótulos |-->
+                    <Label Content="G E R E N C I A R  N O M E  D A  D E S C R I Ç Ã O" Style="{DynamicResource LabelTransparente}" 
+                       FontSize="28" Margin="400,10,0,0" Cursor=""/>
+
+                    <Label Content="Código da Categoria" Style="{DynamicResource LabelTransparente}" Margin="60,90,0,0"/>
+
+                    <Label Content="Código do Nome da Descrição" Style="{DynamicResource LabelTransparente}" Margin="336,145,0,0"/>
+
+                    <Label Content="Nome da Categoria" Style="{DynamicResource LabelTransparente}" Margin="365,90,0,0"/>
+
+                    <Label Content="Código da Subcategoria" Style="{DynamicResource LabelTransparente}" Margin="30,145,0,0"/>
+
+                    <Label Content="Nome da Subategoria" Style="{DynamicResource LabelTransparente}" Margin="874,90,0,0"/>
+
+                    <Label Content="Nome da Descrição" Style="{DynamicResource LabelTransparente}" Margin="680,145,0,0"/>
+
+                    <ComboBox Style="{DynamicResource ComboBoxVerde}" Width="300" Margin="535,85,0,0" DisplayMemberPath="NomeCategoria" SelectedValuePath="Id" 
+                              ItemsSource="{Binding CategoriaModel.ListaDeCategorias}"                              
+                              SelectedValue="{Binding NomeDescricaoModel.CategoriaId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding CategoriaSelecionada, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0"/>
+
+                    <ComboBox Style="{DynamicResource ComboBoxVerde}" Width="300" Margin="1064,85,0,0" DisplayMemberPath="NomeSubcategoria" 
+                              SelectedValuePath="Id" ItemsSource="{Binding SubcategoriaModel.ListaDeSubcategorias}"                              
+                              SelectedValue="{Binding NomeDescricaoModel.SubcategoriaId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedIndex="{Binding SubcategoriaModel.IndiceSelecionadoSubcategoria, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <!--| TextBoxes |-->
+                    <TextBox Width="80" Style="{DynamicResource TxtBrancoEBordaVerde}" Margin="240,85,0,0"
+                             Text="{Binding NomeDescricaoModel.CategoriaId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBox Width="80" Style="{DynamicResource TxtBrancoEBordaVerde}" Margin="240,140,0,0"
+                             Text="{Binding NomeDescricaoModel.SubcategoriaId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBox Width="80" Style="{DynamicResource TxtBrancoEBordaVerde}" Margin="595,140,0,0"
+                             Text="{Binding NomeDescricaoModel.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBox Width="500" Style="{DynamicResource TxtBrancoEBordaVerde}" Margin="850,140,0,0"
+                             Text="{Binding NomeDescricaoModel.NomeDaDescricao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <!--| Pesquisar NomeDaDescricaos|-->
+                    <Grid Margin="900,180,0,0" Height="60" Width="464" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                        <TextBox x:Name="TxtPesquisar" Style="{StaticResource PesquisarTextBox}" Margin="0,15,0,10"
+                                 Text="{Binding TextoPesquisa, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="40" Width="250"/>
+
+                        <TextBlock x:Name="TxbPesquisar" Text="Pesquisar Nome da Descrição" Style="{StaticResource PesquisarTextBlock}" 
+                                   Margin="0,15,0,0" Height="40" VerticalAlignment="Top" Width="250"/>
+
+                        <Button Content="Limpar" FontSize="18" Height="40" Width="160" Style="{DynamicResource BtnVerdeRedondo}" Margin="210,5,0,0"
+                                Command="{Binding ComandoAtualizarNomeDescricao}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <!--| Botões |-->
+                    <Button Content="Adicionar" Command="{Binding ComandoAdicionarNomeDescricao}" Style="{StaticResource BtnVerdeRedondo}" 
+                            Margin="45,195,0,0"/>
+
+                    <Button Content="Editar" Command="{Binding ComandoEditarNomeDescricao}" Style="{StaticResource BtnVerdeRedondo}" 
+                            Margin="215,195,0,0"/>
+
+                    <Button Content="Excluir" Command="{Binding ComandoExcluirNomeDescricao}" Style="{StaticResource BtnVerdeRedondo}" 
+                            Margin="385,195,0,0"/>
+
+                    <Button Content="Atualizar" Command="{Binding ComandoAtualizarNomeDescricao}" Style="{StaticResource BtnVerdeRedondo}" 
+                            Margin="555,195,0,0"/>
+                </Grid>
+
+                <Grid Grid.Row="1" >
+                    <!--| DataGrid Dados |-->
+                    <DataGrid x:Name="DtgDados" Style="{DynamicResource DtgDadosTransparente}" IsReadOnly="True" 
+                              ItemsSource="{Binding ListaDoNomeDescricao}" ColumnHeaderStyle="{DynamicResource CabecalhoTransparente}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Código" Binding="{Binding CategoriaId, StringFormat=\{0:D4\}}" Width="115"/>
+                            <DataGridTextColumn Header="Nome da Categoria" Binding="{Binding NomeCategoria}" Width="320"/>
+                            <DataGridTextColumn Header="Código" Binding="{Binding Id, StringFormat=\{0:D4\}}" Width="100"/>
+                            <DataGridTextColumn Header="Nome da Subcategoria" Binding="{Binding NomeSubcategoria}" Width="355"/>
+                            <DataGridTextColumn Header="Código" Binding="{Binding SubcategoriaId, StringFormat=\{0:D4\}}" Width="115"/>
+                            <DataGridTextColumn Header="Nome da Descricao" Binding="{Binding NomeDaDescricao}" Width="410"/>
+                        </DataGrid.Columns>
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseDoubleClick">
+                                <b:InvokeCommandAction Command="{Binding ComandoDuploClickNomeDescricao}" 
+                                                       CommandParameter="{Binding SelectedItem, ElementName=DtgDados}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+    </Border>
+</UserControl>

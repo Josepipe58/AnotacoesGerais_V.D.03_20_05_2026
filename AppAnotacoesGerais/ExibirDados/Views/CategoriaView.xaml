@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="AppAnotacoesGerais.ExibirDados.Views.CategoriaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppAnotacoesGerais.ExibirDados.ViewModels.Categorias"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" xml:lang="pt-BR" d:DesignHeight="930" d:DesignWidth="1200">
+
+    <UserControl.DataContext>
+        <local:CategoriaViewModel/>
+    </UserControl.DataContext>
+
+    <Border CornerRadius="20" Margin="0 10 10 0" Background="#FF052503">
+
+            <!--| Grid Principal |-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="210"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--| Grid Superior |-->
+                <Grid>
+
+                    <!--| Rótulos |-->
+                    <Label Content="G E R E N C I A R  C A T E G O R I A S" Style="{DynamicResource LabelTransparente}" FontSize="28" 
+                           Margin="400,10,0,0" Cursor=""/>
+
+                    <Label Content="Código" Style="{DynamicResource LabelTransparente}" Margin="30,85,0,0"/>
+
+                    <Label Content="Nome da Categoria" Style="{DynamicResource LabelTransparente}" Margin="200,85,0,0"/>
+
+                    <!--| TextBoxes |-->
+                    <TextBox Width="80" Style="{DynamicResource TxtBrancoEBordaVerde}" Margin="100,80,0,0"
+                             Text="{Binding CategoriaModel.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBox Width="300" Style="{DynamicResource TxtBrancoEBordaVerde}" Margin="370,80,0,0"
+                             Text="{Binding CategoriaModel.NomeCategoria, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <!--| Botões |-->
+                    <Button Content="Adicionar" Command="{Binding ComandoAdicionarCategoria}" Style="{StaticResource BtnVerdeRedondo}" 
+                            Margin="30,141,0,0"/>
+
+                    <Button Content="Editar" Command="{Binding ComandoEditarCategoria}" Style="{StaticResource BtnVerdeRedondo}" 
+                            Margin="200,140,0,0"/>
+
+                    <Button Content="Excluir" Command="{Binding ComandoExcluirCategoria}" Style="{StaticResource BtnVerdeRedondo}" 
+                            Margin="370,140,0,0"/>
+
+                    <Button Content="Atualizar" Command="{Binding ComandoAtualizarCategoria}" Style="{StaticResource BtnVerdeRedondo}" 
+                            Margin="540,140,0,0"/>
+                </Grid>
+
+                <!--| DataGrid de Categorias |-->
+                <DataGrid x:Name="DtgDados" Style="{DynamicResource DtgDadosTransparente}" IsReadOnly="True"
+                          ItemsSource="{Binding CategoriaModel.ListaDeCategorias}" Height="710" 
+                          ColumnHeaderStyle="{DynamicResource CabecalhoTransparente}" Grid.Row="1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Código" Binding="{Binding Id, StringFormat=\{0:D4\}}" Width="100"/>
+                        <DataGridTextColumn Header="Nome da Categoria" Binding="{Binding NomeCategoria}" Width="250"/>
+                    </DataGrid.Columns>
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDoubleClick">
+                            <b:InvokeCommandAction Command="{Binding ComandoDuploClickCategoria}" 
+                                                   CommandParameter="{Binding SelectedItem, ElementName=DtgDados}" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </DataGrid>
+            </Grid>
+    </Border>
+</UserControl>

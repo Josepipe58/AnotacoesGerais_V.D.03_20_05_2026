@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>ExibirDados\Recursos\Imagens\Livros3D.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ExibirDados\Recursos\Estilos\LogotipoFinanceiro.png" />
+    <None Remove="ExibirDados\Views\TelaSenha\IconeChave.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ExibirDados\Recursos\Imagens\Livros3D.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="ExibirDados\Recursos\Imagens\AnotacoesGerais.png" />
+    <Resource Include="ExibirDados\Recursos\Imagens\IconeChave.png" />
+    <Resource Include="ExibirDados\Recursos\Imagens\LogotipoFinanceiro.png" />
+    <Resource Include="ExibirDados\Recursos\Imagens\MeuLogotipo.png" />
+    <Resource Include="ExibirDados\Recursos\Imagens\Notebook.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.Sharp" Version="6.6.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.142" />
+  </ItemGroup>
+
+</Project>

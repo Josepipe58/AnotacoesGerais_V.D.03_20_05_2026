@@ -1,0 +1,278 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp">
+
+    <!--=====================================| Diretório de Imagens |=====================================================-->    
+    
+    <!--| Imagem da Página Inicial |-->
+    <ImageBrush x:Key="PaginainicialImagem" ImageSource="/ExibirDados/Recursos/Imagens/AnotacoesGerais.png" Stretch="Fill"/>
+    
+    <!--| Imagem do Meu Logotipo |-->
+    <ImageBrush x:Key="MeuLogotipo_Imagem" ImageSource="/ExibirDados/Recursos/Imagens/MeuLogotipo.png" Stretch="Fill"/>
+   
+    <!--=============================================| MenuLateral |======================================================-->
+    <DataTemplate x:Key="MenuLateral">
+
+        <Border CornerRadius="10" Grid.Column="0" Background="{DynamicResource CorFundoMenu}" Margin="5 20 5 20">
+            <StackPanel Margin="50,0,0,0">
+                
+                <!--| Logo, Título e Data |-->
+                <StackPanel Orientation="Horizontal" Height="30" Margin="0,50,0,20">
+
+                    <Image Source="/ExibirDados/Recursos/Imagens/LogotipoFinanceiro.png" Height="30" Margin="10 0 0 0"/>
+
+                    <TextBlock Text="GERENCIAR DADOS" Foreground="{DynamicResource CorDaFonte_01}"
+                               FontSize="20" FontFamily="Montserrat" FontWeight="Medium" Margin="5,0,0,0"
+                               VerticalAlignment="Center" HorizontalAlignment="Left" Width="NaN" />
+
+                    <TextBlock Text="{Binding DataAtual}" Foreground="{DynamicResource CorDaFonte_01}"
+                               FontSize="20" FontFamily="Montserrat" FontWeight="Medium" Margin="10,0,0,0"
+                               VerticalAlignment="Center" Background="{x:Null}" HorizontalAlignment="Left" Width="NaN" />
+                </StackPanel>
+                
+                <!--| Menu de Botões |-->
+                <RadioButton Style="{DynamicResource BotaoMenu}" Tag="{DynamicResource Cor01}"  Margin="0,40,0,0"
+                             Command="{Binding ComandoPaginaInicial}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Home" Style="{DynamicResource IconeDoBotaoDoMenu}"/>
+                        <TextBlock Text="Página Inicial" Style="{DynamicResource TextoDoBotaoDoMenu}"/>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{DynamicResource BotaoMenu}" Tag="{DynamicResource Cor02}" 
+                             Command="{Binding ComandoAnotacaoGeral}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="BookOpen" Style="{DynamicResource IconeDoBotaoDoMenu}"/>
+                        <TextBlock Text="Anotações Gerais" Style="{DynamicResource TextoDoBotaoDoMenu}"/>
+
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{DynamicResource BotaoMenu}" Tag="{DynamicResource Cor03}"
+                             Command="{Binding ComandoInformacaoPessoal}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="UserEdit" Style="{DynamicResource IconeDoBotaoDoMenu}"/>
+                        <TextBlock Text="Informações Pessoais" Style="{DynamicResource TextoDoBotaoDoMenu}"/>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{DynamicResource BotaoMenu}" Tag="{DynamicResource Cor04}"
+                             Command="{Binding ComandoConsumoGas}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="FireBurner" Style="{DynamicResource IconeDoBotaoDoMenu}"/>
+                        <TextBlock Text="Consumo de Gás" Style="{DynamicResource TextoDoBotaoDoMenu}"/>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{DynamicResource BotaoMenu}" Tag="{DynamicResource Cor05}"
+                             Command="{Binding ComandoCategoria}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="TableCells" Style="{DynamicResource IconeDoBotaoDoMenu}"/>
+                        <TextBlock Text="Categorias" Style="{DynamicResource TextoDoBotaoDoMenu}"/>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{DynamicResource BotaoMenu}" Tag="{DynamicResource Cor06}"
+                             Command="{Binding ComandoSubcategoria}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="TableList" Style="{DynamicResource IconeDoBotaoDoMenu}"/>
+                        <TextBlock Text="Subcategorias" Style="{DynamicResource TextoDoBotaoDoMenu}"/>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{DynamicResource BotaoMenu}" Tag="{DynamicResource Cor07}"
+                             Command="{Binding ComandoNomeDescricao}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Elementor" Style="{DynamicResource IconeDoBotaoDoMenu}"/>
+                        <TextBlock Text="Nome da Descrição" Style="{DynamicResource TextoDoBotaoDoMenu}"/>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{DynamicResource BotaoMenu}" Tag="{DynamicResource Cor08}"
+                             Command="{Binding ComandoBancoDados}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Database" Style="{DynamicResource IconeDoBotaoDoMenu}"/>
+                        <TextBlock Text="Banco de Dados" Style="{DynamicResource TextoDoBotaoDoMenu}"/>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{DynamicResource BotaoMenu}" Tag="{DynamicResource Cor09}"
+                             Command="{Binding ComandoSairAplicativo}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="ArrowAltCircleLeft" Style="{DynamicResource IconeDoBotaoDoMenu}"/>
+                        <TextBlock Text="Sair do Aplicativo" Style="{DynamicResource TextoDoBotaoDoMenu}"/>
+                    </StackPanel>
+                </RadioButton>
+                <Grid Grid.Row="4" Grid.Column="1" Background="{DynamicResource MeuLogotipo_Imagem}" 
+                      Width="370" Height="370" Margin="-30,0,0,0"/>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
+    <!--=========================================| IconeDoBotaoDoMenu(Imagem de Ícone) |======================================-->
+    <Style TargetType="{x:Type fa:IconImage}" x:Key="IconeDoBotaoDoMenu">
+        <Setter Property="Foreground" Value="{Binding Path=Tag, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Margin" Value="35,0,20,0"/>
+    </Style>
+    
+    <!--=========================================| TextoDoBotaoDoMenu(TextBlock) |============================================-->
+    <Style TargetType="{x:Type TextBlock}" x:Key="TextoDoBotaoDoMenu">
+        <Setter Property="Foreground" Value="{DynamicResource CorDaFonte_01}"/>
+        <Setter Property="FontFamily" Value="Montserrat"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <!--===========================================| CalendarioDatePicker |===============================================-->
+    <Style TargetType="{x:Type DatePicker}" x:Key="CalendarioDatePicker">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource CorDaFonte_01}"/>
+        <Setter Property="SelectedDateFormat" Value="Short"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DatePicker}">
+                    <Border BorderThickness="1" Background="{DynamicResource CorDeFundo_01}" Height="30" Width="205">
+                        <Grid x:Name="PART_Root" HorizontalAlignment="Center" VerticalAlignment="Stretch" 
+                          Background="{DynamicResource CorDeFundo_01}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="PART_Button" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="0" 
+                                VerticalAlignment="Center" Width="30" Background="{DynamicResource CorDeFundo_01}" FontSize="14" Content="D" 
+                                Foreground="{DynamicResource CorDaFonte_02}" BorderBrush="{DynamicResource CorDaBorda_01}" Height="35"/>
+                            <DatePickerTextBox x:Name="PART_TextBox" Grid.Column="0" HorizontalContentAlignment="Stretch" 
+                                           Grid.Row="0" VerticalContentAlignment="Stretch" Foreground="{DynamicResource CorDaFonte_01}" 
+                                           Background="{DynamicResource CorDeFundo_02}" Padding="0 0 0 0" Width="NaN"/>
+                            <Grid x:Name="PART_DisabledVisual" Grid.ColumnSpan="1" Grid.Column="0" 
+                              Opacity="0" Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" 
+                                   PlacementTarget="{Binding ElementName=PART_TextBox}" StaysOpen="True"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--=====================================| TxtBrancoEBordaVerde |=====================================================-->
+    <Style TargetType="{x:Type TextBox}" x:Key="TxtBrancoEBordaVerde">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Foreground" Value="{DynamicResource CorDaFonte_03}"/>
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Background" Value="{DynamicResource CorDeFundo_01}"/>
+        <Setter Property="Padding" Value="5,2,0,0"/>
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource CorDaBorda_02}"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource PontoDeInsercao_02}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" CornerRadius="8" BorderThickness="3" 
+                            Background="{TemplateBinding Background}" BorderBrush="{DynamicResource CorDaBorda_02}">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" 
+                                      VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--=====================================| TxtVerdeEscuroArredondado |================================================-->
+    <Style TargetType="{x:Type TextBox}" x:Key="TxtVerdeEscuroArredondado">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="{DynamicResource CorDaFonte_01}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Background" Value="{DynamicResource CorDeFundo_03}"/>
+        <Setter Property="Padding" Value="10,2,0,0" />
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="190"/>
+        <Setter Property="Margin" Value="0,10,0,10" />
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource PontoDeInsercao_01}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" CornerRadius="6" BorderThickness="2" 
+                            Background="{TemplateBinding Background}" BorderBrush="{DynamicResource CorDaBorda_01}">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" 
+                                      VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--===================| PesquisarTextBox - TextBox e TextBlock usado para pesquisar |================================-->
+    <Style TargetType="{x:Type TextBox}" x:Key="PesquisarTextBox">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="{DynamicResource CorDaFonte_01}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Background" Value="{DynamicResource CorDeFundo_02}"/>
+        <Setter Property="Padding" Value="10,5,0,0" />
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Width" Value="210"/>
+        <Setter Property="Margin" Value="0,10,0,10" />
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource PontoDeInsercao_01}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" CornerRadius="6" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" 
+                                      VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--| PesquisarTextBlock(ElementName) |-->
+    <Style TargetType="{x:Type TextBlock}" x:Key="PesquisarTextBlock">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="{DynamicResource CorDaFonte_01}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Padding" Value="15,2,0,0"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Width" Value="210"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Text, ElementName=TxtPesquisar}" Value="">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--===================================| LabelTransparente |===========================================================-->
+    <Style TargetType="{x:Type Label}" x:Key="LabelTransparente">
+        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="Foreground" Value="{DynamicResource CorDaFonte_01}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Background" Value="{DynamicResource CorDeFundo_04}"/>
+        <Setter Property="Padding" Value="10 0 0 0"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+    </Style>
+</ResourceDictionary>

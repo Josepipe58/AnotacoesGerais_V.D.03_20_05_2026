@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="AppAnotacoesGerais.ExibirDados.Views.AnotacoesGeraisView.AnotacaoGeralGerenciarView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppAnotacoesGerais.ExibirDados.ViewModels.AnotacoesGerais"
+        mc:Ignorable="d" xml:lang="pt-BR" d:DesignHeight="900" d:DesignWidth="1600">
+
+    <UserControl.DataContext>
+        <local:AnotacaoGeralViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Background="#FF22C5B2">
+        <Border CornerRadius="25,25,25,25" Background="#FF021507" BorderThickness="2,4,3,9" Margin="5,5,5,0">
+            <Grid >
+
+                <!--| Título |-->
+                <Label Content="G E R E N C I A R   A N O T A Ç Ã O   G E R A L" Style="{DynamicResource LabelTransparente}" Foreground="White" 
+                       FontSize="28" Margin="450,10,0,0"/>
+
+                <!--|Borda da Descrição |-->
+                <Border Background="#FF22C5B2" CornerRadius="25,25,25,25" BorderThickness="2,4,3,9" Margin="25,190,0,0" Width="1120"
+                        HorizontalAlignment="Left">
+
+                    <TextBox x:Name="TxtDescricao" Text="{Binding AnotacaoGeralModel.Descricao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             FontSize="20" FontWeight="Bold" Foreground="#FF021507" Margin="10,10,10,10" TextWrapping="Wrap" AcceptsTab="True" 
+                             AcceptsReturn="True"/>
+                </Border>
+
+                <!--| Rótulos[Label] -->
+                <Label Content="Código" Style="{DynamicResource LabelTransparente}" Margin="30,65,0,0"/>
+
+                <Label Content="Categoria" Style="{DynamicResource LabelTransparente}" Margin="140,65,0,0"/>
+
+                <Label Content="Subcategoria" Style="{DynamicResource LabelTransparente}" Margin="500,65,0,0"/>
+
+                <Label Content="Nome da Descrição" Style="{DynamicResource LabelTransparente}" Margin="920,65,0,0"/>
+
+                <Label Content="Descrição" Style="{DynamicResource LabelTransparente}" FontSize="20" Height="40" Margin="30,150,0,0"
+                       Padding="10,10,0,0" Width="120"/>
+
+                <Label Content="Data" Style="{DynamicResource LabelTransparente}" Margin="1170,190,0,0"/>
+
+                <!--| TextBoxes |-->
+                <TextBox x:Name="TxtId" Text="{Binding AnotacaoGeralModel.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="70" 
+                         FontSize="20" FontWeight="Bold" Style="{DynamicResource TxtBrancoEBordaVerde}" Margin="35,95,0,0" IsReadOnly="True" 
+                         Height="40"/>
+
+                <!--| Calendário |-->
+                <DatePicker x:Name="DtpData" Style="{DynamicResource CalendarioDatePicker}" Height="44" Width="200" Margin="1175,210,0,0"
+                            Text="{Binding AnotacaoGeralModel.Data, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!--| Comboboxes -->
+                <ComboBox x:Name="CbxCategoria" Style="{DynamicResource ComboBoxVerde}" Height="46" Width="330" Margin="140,95,0,0"
+                          Text="{Binding AnotacaoGeralModel.NomeCategoria, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding CategoriaModel.ListaDeCategorias}" DisplayMemberPath="NomeCategoria" SelectedValuePath="Id"
+                          SelectedItem="{Binding CategoriaSelecionadaEditar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0"/>
+
+                <ComboBox x:Name="CbxSubcategoria" Style="{DynamicResource ComboBoxVerde}" Height="46" Width="390" Margin="505,95,0,0"
+                          Text="{Binding AnotacaoGeralModel.NomeSubcategoria, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding SubcategoriaModel.ListaDeSubcategorias}" DisplayMemberPath="NomeSubcategoria" SelectedValuePath="Id"                                              
+                          SelectedItem="{Binding SubcategoriaSelecionadaEditar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0"/>
+
+                <ComboBox x:Name="CbxNomeDaDescricao" Style="{DynamicResource ComboBoxVerde}" Height="46" Width="460" Margin="925,95,0,0"
+                          Text="{Binding AnotacaoGeralModel.NomeDaDescricao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding NomeDescricaoModel.ListaDoNomeDescricao}" DisplayMemberPath="NomeDaDescricao" SelectedValuePath="Id"                  
+                          SelectedItem="{Binding NomeDescricaoSelecionada, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0"/>
+
+                <Button Content="ADICIONAR" Style="{DynamicResource BtnVerdeRedondo}" 
+                        Margin="1175,275,0,0" Command="{Binding ComandoAdicionarAnotacaoGeral}"/>
+
+                <Button Content="EDITAR" Style="{DynamicResource BtnVerdeRedondo}" 
+                        Margin="1175,345,0,0" Command="{Binding ComandoEditarAnotacaoGeral}"/>
+
+                <Button Content="ATUALIZAR" Style="{DynamicResource BtnVerdeRedondo}" 
+                        Margin="1175,415,0,0" Command="{Binding ComandoAtualizarAnotacaoGeralGerenciarView}"/>
+
+                <Button Content="VOLTAR" Style="{DynamicResource BtnVerdeRedondo}" Margin="1175,485,0,0" 
+                        Command="{Binding ComandoVoltarAnotacaoGeral}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
